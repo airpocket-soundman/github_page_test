@@ -104,7 +104,7 @@ TypeScript / React など、ビルドが必要なサイトは GitHub Actions で
 3. **main ブランチへ push**
    - push 後に Actions が実行され、成功すると Pages が更新されます
 
-### workflow 例（静的ファイルをそのまま公開）
+### workflow 例（ビルドしてから公開）
 
 ```yaml
 name: Deploy GitHub Pages
@@ -132,12 +132,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
@@ -145,8 +154,8 @@ jobs:
 
 ### ビルドが必要な場合（TypeScript / React）
 
-- `Upload artifact` の前に、`npm ci` / `npm run build` を追加
-- `path` を `dist`（または使用フレームワークの出力先）に変更
+- `npm run build` で `dist` を生成してから `path: dist` を指定します
+- 依存関係のインストールは `npm install`（または lockfile 運用時は `npm ci`）を使います
 
 ## カスタムドメインの設定（オプション）
 

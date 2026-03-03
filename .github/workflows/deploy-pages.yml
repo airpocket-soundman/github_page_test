@@ -38,6 +38,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Node.js 実行環境を用意
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # 依存関係をインストール
+      - name: Install dependencies
+        run: npm install
+
+      # ビルドを実行（dist を生成）
+      - name: Build
+        run: npm run build
+
       # Pages 用のメタデータをセットアップ
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -46,8 +61,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # リポジトリルートを公開対象にする（静的ファイル）
-          path: .
+          # ビルド成果物ディレクトリを公開対象にする
+          path: dist
 
       # アップロードしたアーティファクトを GitHub Pages に反映
       - name: Deploy to GitHub Pages
