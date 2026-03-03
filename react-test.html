@@ -27,27 +27,15 @@
     </style>
 </head>
 <body>
-    <h1>React テスト（ビルドなし）</h1>
-    <p>このページは、JSX をブラウザがそのまま解釈できないことを確認するためのテストです。</p>
+    <h1>React テスト（ビルドあり）</h1>
+    <p>このページは、React ソースをビルドした <code>react-test.js</code> を読み込んで表示します。</p>
 
     <div class="panel">
-        <p id="status">読み込み中...</p>
+        <p id="status">ビルド済み React を読み込み中...</p>
         <div id="root"></div>
-        <p>期待結果: エラーになり、下記メッセージが表示されます。</p>
     </div>
 
     <p><a href="index.html">トップへ戻る</a></p>
-
-    <script type="module">
-        const status = document.getElementById("status");
-        import("./react-test.jsx")
-            .then(() => {
-                status.textContent = "予期せず成功しました（環境がJSX変換に対応している可能性があります）。";
-            })
-            .catch((err) => {
-                status.textContent = "想定どおり失敗: React(JSX) はビルドなしで実行できません。";
-                console.error("React JSX load error:", err);
-            });
-    </script>
+    <script src="./react-test.js" defer></script>
 </body>
 </html>

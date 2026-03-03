@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TypeScript テスト（ビルドなし）</title>
+    <title>TypeScript テスト（ビルドあり）</title>
     <style>
         body {
             font-family: "Segoe UI", sans-serif;
@@ -27,26 +27,15 @@
     </style>
 </head>
 <body>
-    <h1>TypeScript テスト（ビルドなし）</h1>
-    <p>このページは、ブラウザが <code>.ts</code> をそのまま実行できないことを確認するためのテストです。</p>
+    <h1>TypeScript テスト（ビルドあり）</h1>
+    <p>このページは、TypeScript をビルドした <code>typescript-test.js</code> を読み込んで表示します。</p>
 
     <div class="panel">
-        <p id="status">読み込み中...</p>
-        <p>期待結果: エラーになり、下記メッセージが表示されます。</p>
+        <p id="status">ビルド済み TypeScript を読み込み中...</p>
+        <div id="ts-output"></div>
     </div>
 
     <p><a href="index.html">トップへ戻る</a></p>
-
-    <script type="module">
-        const status = document.getElementById("status");
-        import("./typescript-test.ts")
-            .then(() => {
-                status.textContent = "予期せず成功しました（環境がTS変換に対応している可能性があります）。";
-            })
-            .catch((err) => {
-                status.textContent = "想定どおり失敗: TypeScript はビルドなしで実行できません。";
-                console.error("TypeScript load error:", err);
-            });
-    </script>
+    <script src="./typescript-test.js" defer></script>
 </body>
 </html>

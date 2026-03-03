@@ -8,9 +8,7 @@ const staticFiles = [
   "README.md",
   "GITHUB_PAGES_SETUP.md",
   "ts-test.html",
-  "react-test.html",
-  "react-test.jsx",
-  "typescript-test.ts"
+  "react-test.html"
 ];
 
 function run(command, args) {
@@ -33,12 +31,22 @@ await mkdir(DIST_DIR, { recursive: true });
 await run("npx", [
   "tsc",
   "index.ts",
+  "typescript-test.ts",
   "--target",
   "ES2020",
   "--module",
-  "ES2020",
+  "none",
   "--outDir",
   DIST_DIR
+]);
+
+await run("npx", [
+  "esbuild",
+  "react-test.tsx",
+  "--bundle",
+  "--platform=browser",
+  "--format=iife",
+  `--outfile=${DIST_DIR}/react-test.js`
 ]);
 
 await Promise.all(staticFiles.map((file) => copyFile(file, `${DIST_DIR}/${file}`)));

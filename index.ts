@@ -7,8 +7,8 @@ const links: LinkItem[] = [
     { href: "https://docs.github.com/ja/pages", label: "GitHub Pagesドキュメント" },
     { href: "README.md", label: "README.md - セットアップガイド" },
     { href: "GITHUB_PAGES_SETUP.md", label: "GITHUB_PAGES_SETUP.md - 詳細設定手順" },
-    { href: "ts-test.html", label: "TypeScript テストページ（ビルドなし）" },
-    { href: "react-test.html", label: "React テストページ（ビルドなし）" }
+    { href: "ts-test.html", label: "TypeScript テストページ（ビルドあり）" },
+    { href: "react-test.html", label: "React テストページ（ビルドあり）" }
 ];
 
 const app = document.getElementById("app");
@@ -18,7 +18,7 @@ if (app) {
         <h1>GitHub Pages ビルドありテストページ</h1>
         <p>このページは <code>index.js</code>（ビルド済みファイル）を読み込んで表示しています。</p>
         <div class="note">
-            TypeScript / React は通常ビルドが必要です。下記リンクで「ビルドなし」テストも確認できます。
+            TypeScript / React をビルドして表示するサンプルです。
         </div>
         <h2>リンク</h2>
         <ul>
