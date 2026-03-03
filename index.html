@@ -3,78 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Pages テストページ</title>
+    <title>GitHub Pages ビルドありテスト</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 800px;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 24px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
         }
         .container {
-            background: white;
-            border-radius: 10px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background: #fff;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         }
         h1 {
-            color: #667eea;
-            text-align: center;
-            margin-bottom: 10px;
+            margin-top: 0;
+            color: #3655c7;
         }
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        .info-box {
+        .note {
             background: #f0f4ff;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 4px;
+            border-left: 4px solid #3655c7;
+            padding: 12px;
+            border-radius: 6px;
         }
-        .success {
-            color: #27ae60;
-            font-weight: bold;
+        ul {
+            line-height: 1.9;
+        }
+        a {
+            color: #2f4ebf;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🎉 GitHub Pages テストページ</h1>
-        <p class="subtitle">このページはGithub Pagesが正常に動作していることを確認します</p>
-        
-        <div class="info-box">
-            <p class="success">✓ GitHub Pages が正常に動作しています！</p>
-            <p>このHTMLファイルが表示されていれば、Github Pagesの設定は成功しています。</p>
-        </div>
-
-        <h2>📋 このリポジトリについて</h2>
-        <p>このリポジトリはGithub Pagesのテスト用です。</p>
-
-        <h2>🔗 リンク</h2>
-        <ul>
-            <li><a href="https://docs.github.com/ja/pages" target="_blank">GitHub Pagesドキュメント</a></li>
-            <li><a href="README.md">README.md - セットアップガイド</a></li>
-            <li><a href="GITHUB_PAGES_SETUP.md">GITHUB_PAGES_SETUP.md - 詳細設定手順</a></li>
-            <li><a href="ts-test.html">TypeScript テストページ（ビルドなし）</a></li>
-            <li><a href="react-test.html">React テストページ（ビルドなし）</a></li>
-        </ul>
-
-        <h2>✨ 今すぐできること</h2>
-        <ol>
-            <li>このページの内容をカスタマイズする</li>
-            <li>独自のスタイルシートを追加する</li>
-            <li>JavaScriptで機能を追加する</li>
-        </ol>
-
-        <hr>
-        <p style="text-align: center; color: #999; margin-top: 40px;">
-            GitHub Pages Test Repository
-        </p>
+    <div id="app" class="container">
+        <p>ビルド済みファイルを読み込み中...</p>
     </div>
+
+    <noscript>このページは JavaScript 有効化が必要です。</noscript>
+    <script type="module" src="./index.js"></script>
 </body>
 </html>
