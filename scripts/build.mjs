@@ -5,6 +5,7 @@ const DIST_DIR = "dist";
 
 const staticFiles = [
   "index.html",
+  "index.js",
   "README.md",
   "GITHUB_PAGES_SETUP.md",
   "ts-test.html",
@@ -30,7 +31,6 @@ await mkdir(DIST_DIR, { recursive: true });
 
 await run("npx", [
   "tsc",
-  "index.ts",
   "typescript-test.ts",
   "--target",
   "ES2020",
