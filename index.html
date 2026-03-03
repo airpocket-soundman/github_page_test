@@ -43,6 +43,22 @@
     </div>
 
     <noscript>このページは JavaScript 有効化が必要です。</noscript>
-    <script type="module" src="./index.js"></script>
+    <script>
+        (function () {
+            var app = document.getElementById("app");
+            var baseUrl = window.location.href.endsWith("/")
+                ? window.location.href
+                : window.location.href + "/";
+            var script = document.createElement("script");
+            script.src = new URL("index.js", baseUrl).toString();
+            script.defer = true;
+            script.onerror = function () {
+                if (app) {
+                    app.innerHTML = "<p>index.js の読み込みに失敗しました。GitHub Pages の公開設定と Actions のデプロイ結果を確認してください。</p>";
+                }
+            };
+            document.body.appendChild(script);
+        })();
+    </script>
 </body>
 </html>
