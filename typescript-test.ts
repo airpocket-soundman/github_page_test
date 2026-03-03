@@ -1,8 +1,8 @@
-const status = document.getElementById("status");
+const statusElement = document.getElementById("status");
 const output = document.getElementById("ts-output");
 
-if (status) {
-  status.textContent = "TypeScript のビルド済みファイル読み込みに成功しました。";
+if (statusElement) {
+  statusElement.textContent = "TypeScript のビルド済みファイル読み込みに成功しました。";
 }
 
 if (output) {
