@@ -26,11 +26,15 @@ function sumBy<T>(items: T[], selector: (item: T) => number): number {
   return items.reduce((total, item) => total + selector(item), 0);
 }
 
-if (statusElement) {
-  statusElement.textContent = "TypeScript のビルド済みファイル読み込みに成功しました。";
+function nextStatus(current: TaskStatus): TaskStatus {
+  if (current === "todo") return "doing";
+  if (current === "doing") return "done";
+  return "todo";
 }
 
-if (output) {
+function render() {
+  if (!output) return;
+
   const doneCount = tasks.filter((task) => task.status === "done").length;
   const totalHours = sumBy(tasks, (task) => task.estimateHours);
   const now = new Date().toLocaleString("ja-JP");
@@ -54,9 +58,39 @@ if (output) {
       ${tasks
         .map(
           (task) =>
-            `<li class="task-item"><span>#${task.id} ${task.title} (${task.estimateHours}h)</span><span class="tag">${statusLabel[task.status]}</span></li>`
+            `<li class="task-item">
+              <span>#${task.id} ${task.title} (${task.estimateHours}h)</span>
+              <span>
+                <span class="tag">${statusLabel[task.status]}</span>
+                <button type="button" class="status-btn" data-task-id="${task.id}">
+                  ステータス変更
+                </button>
+              </span>
+            </li>`
         )
         .join("")}
     </ul>
   `;
+}
+
+if (statusElement) {
+  statusElement.textContent = "TypeScript のビルド済みファイル読み込みに成功しました。";
+}
+
+if (output) {
+  output.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement | null;
+    const button = target?.closest<HTMLButtonElement>(".status-btn");
+    if (!button) return;
+
+    const taskId = Number(button.dataset.taskId);
+    const task = tasks.find((item) => item.id === taskId);
+    if (!task) return;
+
+    task.status = nextStatus(task.status);
+    render();
+  });
+
+  render();
+  setInterval(render, 1000);
 }
