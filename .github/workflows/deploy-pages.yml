@@ -1,0 +1,55 @@
+# Actions タブに表示されるワークフロー名
+name: Deploy GitHub Pages
+
+# main への push で実行し、手動実行も許可
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+# GitHub Pages デプロイに必要な権限
+permissions:
+  # リポジトリ内容の読み取り
+  contents: read
+  # GitHub Pages への公開
+  pages: write
+  # デプロイ認証に使う OIDC トークン
+  id-token: write
+
+# デプロイの同時実行競合を防止
+concurrency:
+  # Pages デプロイで共有するグループ名
+  group: "pages"
+  # 新しい push が来たら古い実行をキャンセル
+  cancel-in-progress: true
+
+jobs:
+  # デプロイ用ジョブ
+  deploy:
+    # github-pages 環境としてデプロイを記録
+    environment:
+      name: github-pages
+      # デプロイ後の URL をジョブに表示
+      url: ${{ steps.deployment.outputs.page_url }}
+    # GitHub ホストの Ubuntu ランナーを使用
+    runs-on: ubuntu-latest
+    steps:
+      # リポジトリをチェックアウト
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Pages 用のメタデータをセットアップ
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 公開対象ファイルを Pages アーティファクトとしてアップロード
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # リポジトリルートを公開対象にする（静的ファイル）
+          path: .
+
+      # アップロードしたアーティファクトを GitHub Pages に反映
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

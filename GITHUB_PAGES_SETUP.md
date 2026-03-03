@@ -7,8 +7,9 @@
 1. [前提条件](#前提条件)
 2. [リポジトリの準備](#リポジトリの準備)
 3. [GitHub Pagesの有効化](#github-pagesの有効化)
-4. [カスタムドメインの設定（オプション）](#カスタムドメインの設定オプション)
-5. [トラブルシューティング](#トラブルシューティング)
+4. [GitHub Actionsでの自動デプロイ](#github-actionsでの自動デプロイ)
+5. [カスタムドメインの設定（オプション）](#カスタムドメインの設定オプション)
+6. [トラブルシューティング](#トラブルシューティング)
 
 ## 前提条件
 
@@ -87,6 +88,65 @@ Source
 
 ├── GitHub Actions (ビルドを自動化)
 ```
+
+## GitHub Actionsでの自動デプロイ
+
+TypeScript / React など、ビルドが必要なサイトは GitHub Actions でのデプロイがおすすめです。
+
+### 手順
+
+1. **Pages のソースを GitHub Actions に変更**
+   - Settings → Pages → Source で **GitHub Actions** を選択
+
+2. **workflow ファイルを追加**
+   - リポジトリに `.github/workflows/deploy-pages.yml` を配置
+
+3. **main ブランチへ push**
+   - push 後に Actions が実行され、成功すると Pages が更新されます
+
+### workflow 例（静的ファイルをそのまま公開）
+
+```yaml
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+### ビルドが必要な場合（TypeScript / React）
+
+- `Upload artifact` の前に、`npm ci` / `npm run build` を追加
+- `path` を `dist`（または使用フレームワークの出力先）に変更
 
 ## カスタムドメインの設定（オプション）
 
@@ -184,6 +244,7 @@ A: GitHub Actionsを使用することで、Hugo、Next.js など他のツール
 - [GitHub Pages 公式ドキュメント](https://docs.github.com/ja/pages)
 - [GitHub Pages + Jekyll](https://docs.github.com/ja/pages/setting-up-a-github-pages-site-with-jekyll)
 - [GitHub Actions での自動デプロイ](https://docs.github.com/ja/actions)
+- [GitHub Pages を GitHub Actions で公開](https://docs.github.com/ja/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
 
 ---
 
