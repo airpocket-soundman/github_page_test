@@ -33,27 +33,39 @@ function App() {
   const doneCount = todos.filter((todo) => todo.done).length;
 
   return (
-    <section>
+    <section className="react-card">
       <h2>React 表示テスト成功</h2>
       <p>このブロックはビルド済みの React で描画されています。</p>
       <p>
         進捗: {doneCount}/{todos.length}
       </p>
-      <div>
-        <button type="button" onClick={() => setFilter("all")}>
+      <div className="toolbar">
+        <button
+          type="button"
+          className={`filter-btn ${filter === "all" ? "active" : ""}`}
+          onClick={() => setFilter("all")}
+        >
           すべて
-        </button>{" "}
-        <button type="button" onClick={() => setFilter("open")}>
+        </button>
+        <button
+          type="button"
+          className={`filter-btn ${filter === "open" ? "active" : ""}`}
+          onClick={() => setFilter("open")}
+        >
           未完了
-        </button>{" "}
-        <button type="button" onClick={() => setFilter("done")}>
+        </button>
+        <button
+          type="button"
+          className={`filter-btn ${filter === "done" ? "active" : ""}`}
+          onClick={() => setFilter("done")}
+        >
           完了
         </button>
       </div>
-      <ul>
+      <ul className="todo-list">
         {visibleTodos.map((todo) => (
-          <li key={todo.id}>
-            <label>
+          <li key={todo.id} className={`todo-item ${todo.done ? "done" : ""}`}>
+            <label className="todo-label">
               <input
                 type="checkbox"
                 checked={todo.done}
@@ -64,9 +76,10 @@ function App() {
                     )
                   );
                 }}
-              />{" "}
-              {todo.title}
+              />
+              <span className="todo-title">{todo.title}</span>
             </label>
+            <span className="todo-badge">{todo.done ? "Done" : "Open"}</span>
           </li>
         ))}
       </ul>

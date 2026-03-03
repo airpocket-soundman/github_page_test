@@ -3,44 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
     <title>GitHub Pages ビルドありテスト</title>
     <style>
+        :root {
+            --bg: #fff8f0;
+            --ink: #1d2a32;
+            --card: rgba(255, 255, 255, 0.78);
+            --line: rgba(35, 50, 61, 0.16);
+            --accent: #ff7b2c;
+            --accent-2: #2bb4a0;
+        }
+        * {
+            box-sizing: border-box;
+        }
         body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 900px;
+            margin: 0;
+            min-height: 100vh;
+            padding: 22px;
+            font-family: "Manrope", "Noto Sans JP", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 7% 10%, rgba(255, 123, 44, 0.35), transparent 42%),
+                radial-gradient(circle at 90% 5%, rgba(43, 180, 160, 0.38), transparent 35%),
+                linear-gradient(145deg, #fffdf9, var(--bg));
+        }
+        .shell {
+            max-width: 980px;
             margin: 0 auto;
-            padding: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
         }
         .container {
-            background: #fff;
-            border-radius: 12px;
-            padding: 32px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--line);
+            border-radius: 26px;
+            padding: 30px;
+            background: var(--card);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 22px 48px rgba(31, 44, 52, 0.16);
+            animation: rise .55s ease both;
         }
-        h1 {
-            margin-top: 0;
-            color: #3655c7;
+        .hero-title {
+            margin: 0 0 10px;
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            line-height: 1.15;
+            letter-spacing: -0.02em;
         }
-        .note {
-            background: #f0f4ff;
-            border-left: 4px solid #3655c7;
-            padding: 12px;
-            border-radius: 6px;
+        .hero-lead {
+            margin: 0;
+            color: rgba(29, 42, 50, 0.78);
+            font-size: 1.03rem;
         }
-        ul {
-            line-height: 1.9;
+        .pill {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 0.82rem;
+            background: linear-gradient(90deg, rgba(255, 123, 44, 0.15), rgba(43, 180, 160, 0.15));
+            border: 1px solid rgba(29, 42, 50, 0.14);
         }
-        a {
-            color: #2f4ebf;
+        .card-grid {
+            margin-top: 22px;
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+        .card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.7);
+            transition: transform .2s ease, border-color .2s ease;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(43, 180, 160, 0.6);
+        }
+        .card h3 {
+            margin: 0;
+            font-size: 1.02rem;
+        }
+        .card p {
+            margin: 8px 0 0;
+            font-size: 0.92rem;
+            color: rgba(29, 42, 50, 0.72);
+        }
+        .loading {
+            margin: 0;
+            font-weight: 700;
+        }
+        .footnote {
+            margin-top: 18px;
+            font-size: 0.9rem;
+            color: rgba(29, 42, 50, 0.66);
+        }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 720px) {
+            .container {
+                padding: 22px;
+                border-radius: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="app" class="container">
-        <p>ビルド済みファイルを読み込み中...</p>
-    </div>
+    <main class="shell">
+        <div id="app" class="container">
+            <p class="loading">ビルド済みファイルを読み込み中...</p>
+        </div>
+    </main>
 
     <noscript>このページは JavaScript 有効化が必要です。</noscript>
     <script>

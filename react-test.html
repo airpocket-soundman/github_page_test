@@ -3,39 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
     <title>React テスト（ビルドあり）</title>
     <style>
+        :root {
+            --bg: #f8fff9;
+            --ink: #1d2a32;
+            --card: rgba(255, 255, 255, 0.83);
+            --line: rgba(35, 50, 61, 0.16);
+            --accent: #1aa087;
+            --accent-2: #ff9a4d;
+        }
+        * { box-sizing: border-box; }
         body {
-            font-family: "Segoe UI", sans-serif;
-            max-width: 760px;
+            margin: 0;
+            min-height: 100vh;
+            padding: 22px;
+            font-family: "Manrope", "Noto Sans JP", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 10% 6%, rgba(26, 160, 135, 0.3), transparent 42%),
+                radial-gradient(circle at 86% 10%, rgba(255, 154, 77, 0.3), transparent 38%),
+                linear-gradient(145deg, #fcfffd, var(--bg));
+        }
+        .shell {
+            max-width: 920px;
             margin: 0 auto;
-            padding: 24px;
-            line-height: 1.6;
         }
         .panel {
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 16px 0;
-            background: #fafafa;
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            padding: 26px;
+            background: var(--card);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 20px 44px rgba(31, 44, 52, 0.14);
+            animation: rise .52s ease both;
         }
-        code {
-            background: #f2f2f2;
-            padding: 2px 6px;
-            border-radius: 4px;
+        .eyebrow {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 800;
+            border: 1px solid rgba(29, 42, 50, 0.13);
+            background: linear-gradient(90deg, rgba(26, 160, 135, 0.15), rgba(255, 154, 77, 0.14));
+            margin-bottom: 10px;
+        }
+        h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.6rem, 3vw, 2.5rem);
+            letter-spacing: -0.02em;
+        }
+        .lead {
+            margin: 0;
+            color: rgba(29, 42, 50, 0.72);
+        }
+        #status {
+            margin-top: 18px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            color: #0f6f5f;
+        }
+        .react-card {
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.88);
+            padding: 16px;
+        }
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin: 10px 0 14px;
+        }
+        .filter-btn {
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            padding: 8px 12px;
+            background: #fff;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .filter-btn.active {
+            border-color: rgba(26, 160, 135, 0.72);
+            color: #0f6f5f;
+            background: rgba(26, 160, 135, 0.1);
+        }
+        .todo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 8px;
+        }
+        .todo-item {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #fff;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .todo-item.done {
+            opacity: 0.72;
+        }
+        .todo-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .todo-item.done .todo-title {
+            text-decoration: line-through;
+        }
+        .todo-badge {
+            font-size: 0.78rem;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(26, 160, 135, 0.4);
+            background: rgba(26, 160, 135, 0.11);
+        }
+        .back {
+            display: inline-block;
+            margin-top: 18px;
+            color: #146a5c;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <h1>React テスト（ビルドあり）</h1>
-    <p>このページは、React ソースをビルドした <code>react-test.js</code> を読み込んで表示します。</p>
+    <main class="shell">
+        <section class="panel">
+            <span class="eyebrow">React Demo</span>
+            <h1>State とフィルタ操作の UI テスト</h1>
+            <p class="lead">このページは <code>react-test.tsx</code> を GitHub Actions でバンドルした <code>react-test.js</code> を表示します。</p>
 
-    <div class="panel">
-        <p id="status">ビルド済み React を読み込み中...</p>
-        <div id="root"></div>
-    </div>
+            <p id="status">ビルド済み React を読み込み中...</p>
+            <div id="root"></div>
 
-    <p><a href="index.html">トップへ戻る</a></p>
+            <a class="back" href="index.html">トップへ戻る</a>
+        </section>
+    </main>
     <script src="./react-test.js" defer></script>
 </body>
 </html>

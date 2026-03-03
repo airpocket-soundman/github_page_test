@@ -36,13 +36,25 @@ if (output) {
   const now = new Date().toLocaleString("ja-JP");
 
   output.innerHTML = `
-    <p><strong>表示テスト成功:</strong> ${now}</p>
-    <p>完了: ${doneCount}/${tasks.length}件 | 見積合計: ${totalHours}h</p>
-    <ul>
+    <div class="metrics">
+      <article class="metric">
+        <p class="metric-label">現在時刻</p>
+        <p class="metric-value">${now}</p>
+      </article>
+      <article class="metric">
+        <p class="metric-label">完了タスク</p>
+        <p class="metric-value">${doneCount}/${tasks.length}</p>
+      </article>
+      <article class="metric">
+        <p class="metric-label">見積時間</p>
+        <p class="metric-value">${totalHours}h</p>
+      </article>
+    </div>
+    <ul class="task-list">
       ${tasks
         .map(
           (task) =>
-            `<li>#${task.id} ${task.title} - ${statusLabel[task.status]} (${task.estimateHours}h)</li>`
+            `<li class="task-item"><span>#${task.id} ${task.title} (${task.estimateHours}h)</span><span class="tag">${statusLabel[task.status]}</span></li>`
         )
         .join("")}
     </ul>
